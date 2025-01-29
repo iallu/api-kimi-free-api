@@ -15,9 +15,9 @@
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --sourcemap --dts --publicDir public --watch --onSuccess \"node --enable-source-maps --no-node-snapshot dist/index.js\"",
     "start": "node dist/index.js",
-    "build": "tsc --project tsconfig.vercel.json && cp -r public dist/",
+    "build": "tsc",
     "fix-imports": "ts-node scripts/fix-imports.ts",
-    "vercel-build": "yarn fix-imports && tsc --project tsconfig.vercel.json && cp -r public dist/"
+    "vercel-build": "echo 'Skipping build step'"
   },
   "author": "Vinlic",
   "license": "ISC",

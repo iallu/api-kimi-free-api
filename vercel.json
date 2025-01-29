@@ -1,13 +1,11 @@
 {
     "version": 2,
-    "buildCommand": "yarn vercel-build",
     "builds": [
         {
-            "src": "dist/vercel.js",
+            "src": "src/vercel.ts",
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "dist/**",
                     "public/**",
                     "configs/**"
                 ]
@@ -17,11 +15,15 @@
     "routes": [
         {
             "src": "/",
-            "dest": "/public/welcome.html"
+            "dest": "/src/vercel.ts"
+        },
+        {
+            "src": "/public/(.*)",
+            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
-            "dest": "/dist/vercel.js"
+            "dest": "/src/vercel.ts"
         }
     ]
 }

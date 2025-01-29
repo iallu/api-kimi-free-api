@@ -14,10 +14,6 @@
     ],
     "routes": [
         {
-            "src": "/",
-            "dest": "/src/vercel.ts"
-        },
-        {
             "src": "/public/(.*)",
             "dest": "/public/$1"
         },

@@ -2,10 +2,11 @@
     "version": 2,
     "builds": [
         {
-            "src": "src/vercel.ts",
+            "src": "dist/vercel.js",
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
+                    "dist/**",
                     "public/**",
                     "configs/**"
                 ]
@@ -19,13 +20,13 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/src/vercel.ts"
+            "dest": "/dist/vercel.js"
         }
     ],
     "functions": {
-        "src/vercel.ts": {
+        "dist/vercel.js": {
             "memory": 1024,
-            "maxDuration": 10
+            "maxDuration": 60
         }
     }
 }

@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Koa from 'koa';
+import KoaRouter from 'koa-router';
 import koaBody from 'koa-body';
 import koaCors from 'koa2-cors';
 import koaRange from 'koa-range';
@@ -7,6 +8,7 @@ import routes from '@/api/routes/index';
 import config from '@/lib/config';
 
 const app = new Koa();
+const router = new KoaRouter();
 
 // 启用跨域
 app.use(koaCors());
@@ -32,26 +34,48 @@ app.use(async (ctx, next) => {
 });
 
 // 加载路由
-for (const route of routes) {
+routes.forEach((route: any) => {
     const prefix = route.prefix || '';
-    for (const method in route) {
-        if (method === 'prefix') continue;
-        for (const path in route[method]) {
-            const handler = route[method][path];
-            app.use(async (ctx, next) => {
-                if (ctx.method.toLowerCase() === method.toLowerCase() && 
-                    ctx.path === prefix + path) {
-                    ctx.body = await handler(ctx);
-                } else {
-                    await next();
-                }
-            });
-        }
-    }
-}
+    Object.keys(route).forEach(method => {
+        if (method === 'prefix') return;
+        
+        const methodRoutes = route[method];
+        Object.keys(methodRoutes).forEach(path => {
+            const handler = methodRoutes[path];
+            const fullPath = `${prefix}${path}`;
+            
+            switch (method.toLowerCase()) {
+                case 'get':
+                    router.get(fullPath, async (ctx) => {
+                        ctx.body = await handler(ctx);
+                    });
+                    break;
+                case 'post':
+                    router.post(fullPath, async (ctx) => {
+                        ctx.body = await handler(ctx);
+                    });
+                    break;
+                case 'put':
+                    router.put(fullPath, async (ctx) => {
+                        ctx.body = await handler(ctx);
+                    });
+                    break;
+                case 'delete':
+                    router.delete(fullPath, async (ctx) => {
+                        ctx.body = await handler(ctx);
+                    });
+                    break;
+            }
+        });
+    });
+});
+
+// 使用路由中间件
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         app.callback()(req, res);
     });
 } 

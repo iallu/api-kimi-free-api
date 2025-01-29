@@ -15,8 +15,8 @@
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --sourcemap --dts --publicDir public --watch --onSuccess \"node --enable-source-maps --no-node-snapshot dist/index.js\"",
     "start": "node dist/index.js",
-    "build": "tsc",
-    "vercel-build": "tsc"
+    "build": "tsc --project tsconfig.vercel.json",
+    "vercel-build": "tsc --project tsconfig.vercel.json"
   },
   "author": "Vinlic",
   "license": "ISC",
@@ -44,6 +44,13 @@
   "devDependencies": {
     "@types/lodash": "^4.14.202",
     "@types/mime": "^3.0.4",
+    "@types/fs-extra": "^11.0.4",
+    "@types/koa": "^2.15.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/uuid": "^9.0.8",
+    "@types/randomstring": "^1.1.11",
+    "@types/minimist": "^1.2.5",
+    "@vercel/node": "^3.0.17",
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
   }

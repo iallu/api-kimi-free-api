@@ -1,7 +1,8 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "noEmit": false,
-        "sourceMap": true
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "removeComments": true
     }
 } 

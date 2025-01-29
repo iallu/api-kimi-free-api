@@ -2,10 +2,11 @@
     "version": 2,
     "builds": [
         {
-            "src": "src/vercel.ts",
+            "src": "dist/vercel.js",
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
+                    "dist/**",
                     "public/**",
                     "configs/**"
                 ]
@@ -19,7 +20,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/src/vercel.ts"
+            "dest": "/dist/vercel.js"
         }
     ]
 }

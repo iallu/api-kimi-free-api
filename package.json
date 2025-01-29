@@ -17,7 +17,7 @@
     "start": "node dist/index.js",
     "build": "tsc && cp -r public dist/ && cp -r configs dist/",
     "fix-imports": "ts-node scripts/fix-imports.ts",
-    "vercel-build": "echo 'Skipping build step'"
+    "vercel-build": "yarn build"
   },
   "author": "Vinlic",
   "license": "ISC",
